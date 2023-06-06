@@ -1,0 +1,53 @@
+#spring基础配置
+spring:
+  # 静态资源路径
+  resources:
+    static-locations: classpath:static/,file:static/
+  application:
+    name: shadow-web
+  profiles:
+    active: local
+  servlet:
+    multipart:
+      max-file-size: 3MB    # 文件最大限制
+      max-request-size: 10MB   # 最大请求限制
+  datasource:
+    url: jdbc:mysql://39.103.175.93:3306/shadow?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.jdbc.Driver
+  mvc:
+    view:
+      suffix: .html
+      prefix: /
+
+file:   # 自定义的文件存储路径（你的服务器磁盘地址）
+  img:
+    location: F:/test/img # 图片文件存储在本地的目录
+  resource:
+    location: /root/model # 资源文件存储在本地的目录
+
+mybatis:
+  config-location:
+    classpath:config/mybatis/mybatis-config.xml
+  mapper-locations:
+    - classpath:mapper/**/*Mapper.xml
+  cache:
+    enabled: true
+    expireTimeInMinutes: 30 # 缓存失效时间
+
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 604800
+  route:
+    authentication:
+      pre-auth: /auth/pre
+      path: /auth/login
+      change-pwd: /auth/changePwd
+      logout: /auth/logout
+      refresh: /auth/refresh
+      phone-login: /auth/phoneLogin
+      send-code: /auth/sendCode
+      register: /auth/register
+  baseUrl: /admin/**

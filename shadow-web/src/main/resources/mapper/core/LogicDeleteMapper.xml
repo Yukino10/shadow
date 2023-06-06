@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shadow.web.mapper.core.LogicDeleteMapper">
+    
+    <resultMap id="indexInfoResultMap" type="com.shadow.web.model.core.TableUniqueIndex">
+        <id property="indexId" column="indexId"/>
+        <result property="tableName" column="tableName"/>
+        <result property="indexName" column="indexName"/>
+        <collection property="fieldList" ofType="com.shadow.web.model.core.UniqueIndexField">
+            <id property="id" column="fieldId"/>
+            <result property="fieldName" column="fieldName"/>
+            <result property="fieldType" column="fieldType"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectIndexInfo" resultMap="indexInfoResultMap" parameterType="java.lang.String">
+        select
+            idx.id           as indexId,
+            idx.table_name   as tableName,
+            idx.index_name   as indexName,
+            field.id         as fieldId,
+            field.field_name as fieldName,
+            field.field_type as fieldType        
+        from cm_table_unique_index idx
+             inner join cm_unique_index_field field on idx.id = field.index_id
+        where    
+             idx.deleted = 0
+             and field.deleted = 0
+             and idx.table_name = #{tableName};
+    </select>
+
+	<select id="queryFieldVal" resultType="java.util.Map" parameterType="com.shadow.web.model.core.UniqueIndexInfo">
+		select
+		<foreach collection="fieldInfos" item="fieldInfo"
+			separator=",">
+			${fieldInfo.fieldName}
+		</foreach>
+		from ${tableName}
+		where deleted = 0 and id=${id}
+	</select>
+
+	<select id="selectMaxDeleted" resultType="java.lang.Integer" parameterType="com.shadow.web.model.core.UniqueIndexInfo" useCache="false">
+		select deleted
+		from ${tableName}
+		<where>
+			<foreach collection="fieldInfos" item="fieldInfo" separator="and">
+				<choose>
+				    <when test="fieldInfo.fieldType == 'String'">
+				        ${fieldInfo.fieldName} = '${fieldInfo.fieldValue}'
+				    </when>
+				    <otherwise>
+				        ${fieldInfo.fieldName} = ${fieldInfo.fieldValue}
+				    </otherwise>
+				</choose>
+			</foreach>
+		</where>
+		order by deleted desc
+		limit 1
+	</select>
+
+</mapper>

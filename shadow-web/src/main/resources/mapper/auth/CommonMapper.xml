@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.shadow.web.mapper.auth.CommonMapper">
+
+    <select id="selectRelationTable" parameterType="String"
+            resultType="com.shadow.web.model.auth.InformationSchema">
+        SELECT
+        t.TABLE_NAME AS tableName,
+        t.COLUMN_NAME AS columnName,
+        t.CONSTRAINT_NAME AS constraintName,
+        t.REFERENCED_TABLE_NAME AS referencedTableName,
+        t.REFERENCED_COLUMN_NAME AS referencedColumnName
+        FROM
+        INFORMATION_SCHEMA.KEY_COLUMN_USAGE t
+        WHERE
+        t.REFERENCED_TABLE_NAME = #{tableName,jdbcType=VARCHAR};
+    </select>
+
+
+    <select id="selectRelationRecordCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from
+        ${tableName}
+        where
+        ${columnName} = ${fkValue} and deleted = 0;
+    </select>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classes>
+
+    <class name="Vending" device="true">
+        
+        <field type="String" table="vending" column="name">name</field>
+        <list type="CargoRoad" table="cargo_road">cargoRoad</list>
+    </class>
+
+    <class name="CargoRoad">
+        
+        <field type="Integer" table="cargo_road" column="serial">serial</field>
+        <list type="Commodity" table="re_road_commodity">commodity</list>
+    </class>
+
+    <class name="Commodity">
+        
+        <field type="String" table="commodity" column="name">name</field>
+        <field type="double" table="commodity" column="price">price</field>
+        <field type="Integer" table="re_road_commodity" column="number">number</field>
+    </class>
+
+</classes>

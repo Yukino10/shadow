@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classes>
+	<class name="SduCabinet" device="true" table="sdu_cabinet_">
+		<field type="String" table="sdu_cabinet_" column="name">name</field>
+		<field type="String" table="sdu_cabinet_" column="description">description</field>
+		<field type="String" table="sdu_cabinet_" column="cabinet_type_id">cabinetTypeId</field>
+		<field type="String" table="sdu_cabinet_" column="lon">lon</field>
+		<field type="String" table="sdu_cabinet_" column="lat">lat</field>
+		<field type="String" table="sdu_cabinet_" column="location">location</field>
+		<field type="String" table="sdu_cabinet_" column="init_lock_state">initLockState</field>
+		<list type="SduGate" table="sdu_cabinet_gate_">gates</list>
+		<!-- 视频列表 -->
+		<list type="SduMedia" table="sdu_media">videos</list>
+		<!-- 轮播图  -->
+		<list type="SduMedia" table="sdu_media">rotationImg</list>
+	</class>
+	<class name="SduGate" table="sdu_cabinet_gate_">
+		<field type="String" table="sdu_cabinet_gate_" column="mode">mode</field>
+		<field type="int" table="sdu_cabinet_gate_" column="table_num">tableNum</field>
+		<field type="int" table="sdu_cabinet_gate_" column="lock_num">lockNum</field>
+		<field type="String" table="sdu_cabinet_gate_" column="type">type</field>
+		<field type="String" table="sdu_cabinet_gate_" column="left_bottom_x">leftBottomX</field>
+		<field type="String" table="sdu_cabinet_gate_" column="left_bottom_y">leftBottomY</field>
+		<field type="String" table="sdu_cabinet_gate_" column="right_top_x">rightTopX</field>
+		<field type="String" table="sdu_cabinet_gate_" column="right_top_y">rightTopY</field>
+		<!-- 锁的开关状态变化，数值改变就开门 -->
+		<field type="int" table="sdu_cabinet_gate_" column="open_state">openState</field>
+	</class>
+	<!-- TODO 新添加 path downloaded an_path -->
+	<class name="SduMedia" table="sdu_media">
+		<!-- 文件名 -->
+		<field type="String" table="sdu_media" column="name">name</field>
+		<!-- 文件的格式 -->
+		<field type="String" table="sdu_media" column="mime">mime</field>
+		<!-- 网络中位置 -->
+		<field type="String" table="sdu_media" column="path">path</field>
+		<!-- 是否已经下载到android -->
+		<field type="Boolean" table="sdu_media" column="downloaded">downloaded</field>
+		<!-- android 中位置 -->
+		<field type="String" table="sdu_media" column="an_path">anPath</field>
+	</class>
+</classes>

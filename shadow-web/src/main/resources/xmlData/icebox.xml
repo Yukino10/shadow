@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classes>
+
+    <class name="Icebox" device="true" table="icebox" comment="冰箱">
+        <field type="String" table="icebox" column="name" comment="名称">name</field>
+        <field type="Double" table="icebox" column="temperature" comment="温度">temperature</field>
+		<list type="Light" table="light" comment="灯泡">lightList</list>
+		<list type="Door" table="door" comment="门">doorList</list>
+        <video comment="摄像头">camera</video>
+    </class>
+
+    <class name="Light" table="light" comment="灯">
+        <field type="int" table="light" column="serial" comment="序号">serial</field>
+        <field type="String" table="light" column="position" comment="位置">position</field>
+        <field type="String" table="light" column="state" comment="状态">state</field>
+    </class>
+
+    <class name="Door" table="door" comment="门">
+        <field type="String" table="door" column="serial" comment="序号">serial</field>
+        <field type="String" table="door" column="position" comment="位置">position</field>
+        <field type="String" table="door" column="state" comment="状态">state</field>
+    </class>
+
+</classes>

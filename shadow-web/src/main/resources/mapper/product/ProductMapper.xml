@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shadow.web.mapper.product.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.shadow.web.model.product.Product" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="encryption" property="encryption" jdbcType="VARCHAR" />
+    <result column="operate_system" property="operateSystem" jdbcType="VARCHAR" />
+    <result column="protocol_size" property="protocolSize" jdbcType="INTEGER" />
+    <result column="server_size" property="serverSize" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="updated" property="updated" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, file_url, device_id, encryption, operate_system, protocol_size, server_size, 
+    description, updated, create_time, update_time, deleted
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shadow.web.model.product.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from am_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from am_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from am_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shadow.web.model.product.ProductExample" >
+    delete from am_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shadow.web.model.product.Product" >
+    insert into am_product (id, name, file_url, 
+      device_id, encryption, operate_system, 
+      protocol_size, server_size, description, 
+      updated, create_time, update_time, 
+      deleted)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, 
+      #{deviceId,jdbcType=INTEGER}, #{encryption,jdbcType=VARCHAR}, #{operateSystem,jdbcType=VARCHAR}, 
+      #{protocolSize,jdbcType=INTEGER}, #{serverSize,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{updated,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shadow.web.model.product.Product" >
+    insert into am_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="fileUrl != null" >
+        file_url,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="encryption != null" >
+        encryption,
+      </if>
+      <if test="operateSystem != null" >
+        operate_system,
+      </if>
+      <if test="protocolSize != null" >
+        protocol_size,
+      </if>
+      <if test="serverSize != null" >
+        server_size,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="updated != null" >
+        updated,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="encryption != null" >
+        #{encryption,jdbcType=VARCHAR},
+      </if>
+      <if test="operateSystem != null" >
+        #{operateSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="protocolSize != null" >
+        #{protocolSize,jdbcType=INTEGER},
+      </if>
+      <if test="serverSize != null" >
+        #{serverSize,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shadow.web.model.product.ProductExample" resultType="java.lang.Integer" >
+    select count(*) from am_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update am_product
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileUrl != null" >
+        file_url = #{record.fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceId != null" >
+        device_id = #{record.deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.encryption != null" >
+        encryption = #{record.encryption,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operateSystem != null" >
+        operate_system = #{record.operateSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.protocolSize != null" >
+        protocol_size = #{record.protocolSize,jdbcType=INTEGER},
+      </if>
+      <if test="record.serverSize != null" >
+        server_size = #{record.serverSize,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updated != null" >
+        updated = #{record.updated,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deleted != null" >
+        deleted = #{record.deleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update am_product
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      file_url = #{record.fileUrl,jdbcType=VARCHAR},
+      device_id = #{record.deviceId,jdbcType=INTEGER},
+      encryption = #{record.encryption,jdbcType=VARCHAR},
+      operate_system = #{record.operateSystem,jdbcType=VARCHAR},
+      protocol_size = #{record.protocolSize,jdbcType=INTEGER},
+      server_size = #{record.serverSize,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      updated = #{record.updated,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      deleted = #{record.deleted,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shadow.web.model.product.Product" >
+    update am_product
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        file_url = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="encryption != null" >
+        encryption = #{encryption,jdbcType=VARCHAR},
+      </if>
+      <if test="operateSystem != null" >
+        operate_system = #{operateSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="protocolSize != null" >
+        protocol_size = #{protocolSize,jdbcType=INTEGER},
+      </if>
+      <if test="serverSize != null" >
+        server_size = #{serverSize,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shadow.web.model.product.Product" >
+    update am_product
+    set name = #{name,jdbcType=VARCHAR},
+      file_url = #{fileUrl,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=INTEGER},
+      encryption = #{encryption,jdbcType=VARCHAR},
+      operate_system = #{operateSystem,jdbcType=VARCHAR},
+      protocol_size = #{protocolSize,jdbcType=INTEGER},
+      server_size = #{serverSize,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      updated = #{updated,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByDevicePropertyId" parameterType="Integer" resultMap="BaseResultMap">
+    select p.id, p.updated
+    from am_product p, am_device_property dp
+    where p.device_id = dp.device_id
+      and p.deleted = 0 and dp.deleted = 0
+      and dp.id = ${devicePropertyId}
+  </select>
+</mapper>

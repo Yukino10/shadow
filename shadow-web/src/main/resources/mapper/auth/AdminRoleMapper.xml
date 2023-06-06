@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shadow.web.mapper.auth.AdminRoleMapper" >
+    <resultMap id="BaseResultMap" type="com.shadow.web.model.auth.Role" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+        <result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
+        <result column="is_system" property="isSystem" jdbcType="BIT" />
+        <result column="co_level" property="coLevel" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="deleted" property="deleted" jdbcType="INTEGER" />
+    </resultMap>
+    <resultMap id="roleParams" type="com.shadow.web.model.params.RoleParams">
+        <id column="id" property="roleId" jdbcType="INTEGER" />
+        <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+        <result column="role_desc" property="description" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="selectRoleByClass" resultMap="roleParams">
+      SELECT
+	    r.id,
+	    r.role_name,
+	    r.role_desc
+      FROM
+	    cm_role r,
+	    cm_user u
+      WHERE
+	    u.id = ${loginUserId}
+      AND r.deleted = 0
+      AND r.is_system <![CDATA[ <> ]]> 1
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select
+            r.id, r.role_name, r.co_level
+        from cm_role r, cm_user_role ur
+        where ur.role_id = r.id and ur.deleted = 0 and r.deleted = 0
+          and ur.user_id = ${userId}
+    </select>
+</mapper>

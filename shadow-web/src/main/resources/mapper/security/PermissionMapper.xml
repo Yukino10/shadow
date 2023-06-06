@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shadow.web.mapper.security.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.shadow.web.model.security.Permission" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="permission_name" property="permissionName" jdbcType="VARCHAR" />
+    <result column="permission_desc" property="permissionDesc" jdbcType="VARCHAR" />
+    <result column="is_system" property="isSystem" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+  </resultMap>  
+  <sql id="Base_Column_List" >
+    id, permission_name, permission_desc, is_system, create_time, update_time, deleted
+  </sql>  
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    from cm_permission
+    where deleted = 0 and id in (select crp.permission_id
+                                 from cm_role_permission crp
+                                 where crp.deleted = 0 and crp.role_id in (select cur.role_id
+                                                                           from cm_user_role cur
+                                                                           where cur.deleted = 0 and cur.user_id = #{userId,jdbcType=INTEGER}
+                                                                           )
+                                 )
+  </select>
+  <select id="selectNamesByUserId" resultType="java.lang.String" parameterType="java.lang.Integer">
+    select
+    permission_name
+    from cm_permission
+    where deleted = 0 and id in (select crp.permission_id
+                                 from cm_role_permission crp
+                                 where crp.deleted = 0 and crp.role_id in (select cur.role_id
+                                                                           from cm_user_role cur
+                                                                           where cur.deleted = 0 and cur.user_id = #{userId,jdbcType=INTEGER}
+                                                                           )
+                                 )
+  </select>
+  <select id="selectCntByUserIdAndPermissionName" resultType="java.lang.Integer">
+    select count(1)
+    from cm_permission
+    where deleted = 0 and permission_name = #{permissionName,jdbcType=VARCHAR} and id in (select crp.permission_id
+                                                                                          from cm_role_permission crp
+                                                                                          where crp.deleted = 0 and crp.role_id in (select cur.role_id
+                                                                                                                                    from cm_user_role cur
+                                                                                                                                    where cur.deleted = 0 and cur.user_id = #{userId,jdbcType=INTEGER}
+                                                                                                                                    )
+                                                                                          )
+  </select>
+</mapper>
